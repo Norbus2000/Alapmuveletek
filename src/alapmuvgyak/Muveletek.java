@@ -1,5 +1,15 @@
 package alapmuvgyak;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import static sun.net.ext.ExtendedSocketOptions.options;
+import static sun.security.krb5.Confounder.bytes;
+
 public class Muveletek extends javax.swing.JFrame {
 
     /**
@@ -18,6 +28,10 @@ public class Muveletek extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pnlGyakorlas = new javax.swing.JPanel();
         lblFeladat = new javax.swing.JLabel();
         txtEredmeny = new javax.swing.JTextField();
@@ -41,9 +55,20 @@ public class Muveletek extends javax.swing.JFrame {
         mnuFajl = new javax.swing.JMenu();
         mnuFajlMegnyit = new javax.swing.JMenuItem();
         mnuFajlMent = new javax.swing.JMenuItem();
+        MenuMentesMask = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mnuFajlKilep = new javax.swing.JMenuItem();
-        mnuMuvelet = new javax.swing.JMenu();
+        MuvMenu = new javax.swing.JMenu();
+        MenuOsszead = new javax.swing.JRadioButtonMenuItem();
+        MenuKivon = new javax.swing.JRadioButtonMenuItem();
+        MenuSzorzas = new javax.swing.JRadioButtonMenuItem();
+        MenuOSztas = new javax.swing.JRadioButtonMenuItem();
+
+        jMenu1.setText("File");
+        jMenuBar2.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar2.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Alapműveletek gyakoroltatása");
@@ -53,11 +78,6 @@ public class Muveletek extends javax.swing.JFrame {
         lblFeladat.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         btnEllenorzes.setText("Ellenőrzés");
-        btnEllenorzes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEllenorzesActionPerformed(evt);
-            }
-        });
 
         lblValasz.setText("visszajelzés");
 
@@ -94,11 +114,6 @@ public class Muveletek extends javax.swing.JFrame {
         btnUj.setText("Új feladat");
 
         btnMegoldas.setText("Megoldás");
-        btnMegoldas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMegoldasActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Statisztika"));
 
@@ -194,10 +209,18 @@ public class Muveletek extends javax.swing.JFrame {
         mnuFajl.setText("Fájl");
 
         mnuFajlMegnyit.setText("Megnyit");
+        mnuFajlMegnyit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuFajlMegnyitActionPerformed(evt);
+            }
+        });
         mnuFajl.add(mnuFajlMegnyit);
 
         mnuFajlMent.setText("Ment");
         mnuFajl.add(mnuFajlMent);
+
+        MenuMentesMask.setText("Mentés másként");
+        mnuFajl.add(MenuMentesMask);
         mnuFajl.add(jSeparator1);
 
         mnuFajlKilep.setText("Kilép");
@@ -205,8 +228,36 @@ public class Muveletek extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuFajl);
 
-        mnuMuvelet.setText("Műveletek");
-        jMenuBar1.add(mnuMuvelet);
+        MuvMenu.setText("Műveletek");
+        buttonGroup1.add(MuvMenu);
+
+        MenuOsszead.setSelected(true);
+        MenuOsszead.setText("Összeadás");
+        MenuOsszead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuOsszeadActionPerformed(evt);
+            }
+        });
+        MuvMenu.add(MenuOsszead);
+
+        MenuKivon.setSelected(true);
+        MenuKivon.setText("Kivonás");
+        MenuKivon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuKivonActionPerformed(evt);
+            }
+        });
+        MuvMenu.add(MenuKivon);
+
+        MenuSzorzas.setSelected(true);
+        MenuSzorzas.setText("Szorzás");
+        MuvMenu.add(MenuSzorzas);
+
+        MenuOSztas.setSelected(true);
+        MenuOSztas.setText("Osztás");
+        MuvMenu.add(MenuOSztas);
+
+        jMenuBar1.add(MuvMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -244,13 +295,33 @@ public class Muveletek extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEllenorzesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEllenorzesActionPerformed
-        
-    }//GEN-LAST:event_btnEllenorzesActionPerformed
+    private void MenuKivonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuKivonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuKivonActionPerformed
 
-    private void btnMegoldasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMegoldasActionPerformed
+    private void MenuOsszeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuOsszeadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuOsszeadActionPerformed
+
+    private void mnuFajlMegnyitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFajlMegnyitActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Fájl mentése");
+        fc.setCurrentDirectory(new File("."));
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
-    }//GEN-LAST:event_btnMegoldasActionPerformed
+        int ValasztottGomb = fc.showSaveDialog(this);
+        if (ValasztottGomb== JFileChooser.APPROVE_OPTION){
+            File f =fc.getSelectedFile();
+            if (f.isDirectory()) {
+                lblEredmeny.setText("<html>Elérés: " + f.getPath() + "<br>Könyvtár: "+ f.getName()+"</html>");
+                try {
+                    Files.write(Paths.get(f.getPath(),"stat.txt"), "Statisztika: ".getBytes());
+                } catch (IOException ex) {
+                    Logger.getLogger(Muveletek.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_mnuFajlMegnyitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,10 +362,20 @@ public class Muveletek extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButtonMenuItem MenuKivon;
+    private javax.swing.JMenuItem MenuMentesMask;
+    private javax.swing.JRadioButtonMenuItem MenuOSztas;
+    private javax.swing.JRadioButtonMenuItem MenuOsszead;
+    private javax.swing.JRadioButtonMenuItem MenuSzorzas;
+    private javax.swing.JMenu MuvMenu;
     private javax.swing.JButton btnEllenorzes;
     private javax.swing.JButton btnMegoldas;
     private javax.swing.JButton btnUj;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel lblEredmeny;
@@ -314,7 +395,6 @@ public class Muveletek extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuFajlKilep;
     private javax.swing.JMenuItem mnuFajlMegnyit;
     private javax.swing.JMenuItem mnuFajlMent;
-    private javax.swing.JMenu mnuMuvelet;
     private javax.swing.JPanel pnlGyakorlas;
     private javax.swing.JTextField txtEredmeny;
     // End of variables declaration//GEN-END:variables
