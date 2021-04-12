@@ -1,12 +1,14 @@
 package alapmuvgyak;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import static sun.net.ext.ExtendedSocketOptions.options;
 import static sun.security.krb5.Confounder.bytes;
 
@@ -53,8 +55,8 @@ public class Muveletek extends javax.swing.JFrame {
         lblSzorzasProba = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuFajl = new javax.swing.JMenu();
-        mnuFajlMegnyit = new javax.swing.JMenuItem();
         mnuFajlMent = new javax.swing.JMenuItem();
+        mnuFajlMegnyit = new javax.swing.JMenuItem();
         MenuMentesMask = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mnuFajlKilep = new javax.swing.JMenuItem();
@@ -208,18 +210,23 @@ public class Muveletek extends javax.swing.JFrame {
 
         mnuFajl.setText("Fájl");
 
-        mnuFajlMegnyit.setText("Megnyit");
-        mnuFajlMegnyit.addActionListener(new java.awt.event.ActionListener() {
+        mnuFajlMent.setText("Ment");
+        mnuFajlMent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuFajlMegnyitActionPerformed(evt);
+                mnuFajlMentActionPerformed(evt);
             }
         });
-        mnuFajl.add(mnuFajlMegnyit);
-
-        mnuFajlMent.setText("Ment");
         mnuFajl.add(mnuFajlMent);
 
+        mnuFajlMegnyit.setText("Megnyitás");
+        mnuFajl.add(mnuFajlMegnyit);
+
         MenuMentesMask.setText("Mentés másként");
+        MenuMentesMask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuMentesMaskActionPerformed(evt);
+            }
+        });
         mnuFajl.add(MenuMentesMask);
         mnuFajl.add(jSeparator1);
 
@@ -303,12 +310,12 @@ public class Muveletek extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuOsszeadActionPerformed
 
-    private void mnuFajlMegnyitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFajlMegnyitActionPerformed
+    private void mnuFajlMentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFajlMentActionPerformed
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Fájl mentése");
         fc.setCurrentDirectory(new File("."));
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
+
         int ValasztottGomb = fc.showSaveDialog(this);
         if (ValasztottGomb== JFileChooser.APPROVE_OPTION){
             File f =fc.getSelectedFile();
@@ -321,7 +328,35 @@ public class Muveletek extends javax.swing.JFrame {
                 }
             }
         }
-    }//GEN-LAST:event_mnuFajlMegnyitActionPerformed
+    }//GEN-LAST:event_mnuFajlMentActionPerformed
+
+    private void MenuMentesMaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuMentesMaskActionPerformed
+             JFileChooser fc = new JFileChooser(new File("."));
+        fc.setDialogTitle("Mentés másként");
+        fc.setAcceptAllFileFilterUsed(false);
+        
+        FileNameExtensionFilter filter = null;
+        FileNameExtensionFilter imgfilter = new FileNameExtensionFilter("PNG és GIf képek","png","gif");
+        fc.addChoosableFileFilter(filter);
+        
+        FileNameExtensionFilter txtfilter = new FileNameExtensionFilter("Szöveges dokumentumok", "txt", "pdf");
+        fc.addChoosableFileFilter(filter);
+        
+        fc.setFileFilter(txtfilter);
+
+        int ValasztottGomb = fc.showSaveDialog(this);
+        if (ValasztottGomb== JFileChooser.APPROVE_OPTION){
+            File f =fc.getSelectedFile();
+            String kit = fc.getFileFilter().getDescription();
+            String fn = f.getName()+"."+kit;
+                lblEredmeny.setText("<html>Elérés: " + f.getPath() + "<br>Fájl neve:  "+ f.getName()+"</html>");
+                try {
+                    Files.write(Paths.get(fn), "Statisztika: ".getBytes());
+                } catch (IOException ex) {
+                    Logger.getLogger(Muveletek.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+    }//GEN-LAST:event_MenuMentesMaskActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,7 +365,7 @@ public class Muveletek extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
