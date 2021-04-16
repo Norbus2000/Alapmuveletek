@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -348,7 +349,17 @@ public class Muveletek extends javax.swing.JFrame {
         if (ValasztottGomb== JFileChooser.APPROVE_OPTION){
             File f =fc.getSelectedFile();
             String kit = fc.getFileFilter().getDescription();
-            String fn = f.getName()+"."+kit;
+            String fn = f.getPath();//+"."+kit;
+            
+            if(!fn.endsWith("."+kit[0])) {
+                fn+="."+kit[0];
+            }
+            
+            Path path =Paths.get(fn);
+            boolean mentes = true;
+            
+            
+            
                 lblEredmeny.setText("<html>Elérés: " + f.getPath() + "<br>Fájl neve:  "+ f.getName()+"</html>");
                 try {
                     Files.write(Paths.get(fn), "Statisztika: ".getBytes());
